@@ -1,0 +1,160 @@
+data:
+  chengdu_m:
+    adjacency_matrix_path: data/chengdu_m/matrix.npy
+    dataset_path: data/chengdu_m/dataset.npy
+    enable_spatiotemporal_learning: true
+    node_num: 524
+    speed_mean: 29.0982979559
+    speed_std: 9.75304346669
+    time_step: 17280
+  data_keys:
+  - metr-la
+  - pems-bay
+  - shenzhen
+  - chengdu_m
+  metr-la:
+    adjacency_matrix_path: data/metr-la/matrix.npy
+    dataset_path: data/metr-la/dataset.npy
+    enable_spatiotemporal_learning: true
+    node_num: 207
+    speed_mean: 58.465786
+    speed_std: 12.905341
+    time_step: 34272
+  pems-bay:
+    adjacency_matrix_path: data/pems-bay/matrix.npy
+    dataset_path: data/pems-bay/dataset.npy
+    enable_spatiotemporal_learning: true
+    node_num: 325
+    speed_mean: 62.621582859
+    speed_std: 9.58811369696
+    time_step: 52116
+  shenzhen:
+    adjacency_matrix_path: data/shenzhen/matrix.npy
+    dataset_path: data/shenzhen/dataset.npy
+    enable_spatiotemporal_learning: true
+    node_num: 627
+    speed_mean: 30.5735608506
+    speed_std: 11.0922606598
+    time_step: 17280
+evaluation:
+  horizons:
+    chengdu_m:
+      10min: 1
+      120min: 12
+      30min: 3
+      60min: 6
+    default:
+      step1: 1
+      step12: 12
+      step3: 3
+      step6: 6
+    metr-la:
+      15min: 3
+      30min: 6
+      5min: 1
+      60min: 12
+    pems-bay:
+      15min: 3
+      30min: 6
+      5min: 1
+      60min: 12
+    shenzhen:
+      10min: 1
+      120min: 12
+      30min: 3
+      60min: 6
+  metrics:
+  - MAE
+  - RMSE
+  - MAPE
+  plot_nodes:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 50
+  - 100
+  plot_time_steps:
+  - 0
+  - 3
+  - 6
+  - 9
+  - 11
+experiment:
+  device: auto
+  log_dir: logs
+  name: mcpst_fsl_traffic_prediction
+  plot_dir: plots
+  save_dir: experiments
+  seed: 42
+few_shot:
+  adaptation_steps: 8
+  enabled: true
+  gradient_clip_inner: 1.0
+  gradient_clip_outer: 1.0
+  inner_lr: 0.0005
+  meta_epochs: 100
+  num_tasks: 4
+  outer_lr: 0.0001
+  query_size: 16
+  support_size: 12
+logging:
+  checkpoint_frequency: 10
+  level: INFO
+  plot_physics_features: true
+  plot_predictions: true
+  plot_training_curves: true
+  save_metrics: true
+  save_model_checkpoints: true
+model:
+  dropout: 0.1
+  hidden_dim: 16
+  input_dim: 6
+  name: MCPST_FSL
+  node_minibatch_cpu: 4096
+  node_minibatch_gpu: 1024
+  num_diffusion_steps: 6
+  num_eigen_vectors: 8
+  num_oscillator_steps: 10
+  physics:
+    alpha_consistency: 0.1
+    alpha_flow: 2.0
+    alpha_physics: 0.5
+    alpha_spatial: 0.5
+    alpha_temporal: 0.5
+    alpha_uncertainty: 0.05
+  pred_len: 12
+  spatial_dim: 2
+task:
+  batch_size: 8
+  his_num: 12
+  pred_num: 12
+  test_batch_size: 8
+training:
+  add_physics_features: true
+  batch_size: 8
+  early_stopping:
+    min_delta: 1e-5
+    patience: 20
+    restore_best_weights: true
+  epochs: 300
+  gradient_clip: 1.0
+  learning_rate: 0.0003
+  minibatch_size: 4096
+  scheduler:
+    factor: 0.7
+    min_lr: 1e-6
+    patience: 10
+    type: plateau
+  source_epochs: 250
+  source_lr: 0.0003
+  target_days: 3
+  target_epochs: 250
+  target_lr: 0.0001
+  test_batch_size: 8
+  test_dataset: metr-la
+  weight_decay: 1e-4
+validation:
+  shuffle: false
+  split_ratio: 0.8
