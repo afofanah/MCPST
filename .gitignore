@@ -4,3 +4,6 @@ __pycache__/
 logs/
 cache/
 results/~$*
+_mainResutls/
+plots/
+results/
