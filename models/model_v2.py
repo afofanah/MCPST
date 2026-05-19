@@ -832,5 +832,5 @@ class PhysicsInformedLoss(nn.Module):
         return loss_dict
 
 
-PCLAD_Traffic = PCLAD_Traffic
+MCPST_Traffic = MCPST_Traffic
 PhysicsInformedLoss = PhysicsInformedLoss
